@@ -58,3 +58,9 @@ dist/
 htmlcov/
 .tox/
 docs/_build/
+
+results/
+server.pid
+server
+benchmark_dashboard.html
+results_summary.csv

@@ -28,11 +28,11 @@ wrk -t8 -c1000 -d60s -s post.lua http://localhost:3000/process
 
 ## 📁 Structure
 
-Each framework has its own folder inside the `benchmark/` directory. Run each individually to benchmark it.
+Each framework has its own folder inside the main directory. Run each individually to benchmark it.
 
 ## 🚀 Running
 
-Each example can be run with its corresponding language runtime.
+Each framework can be run with its corresponding language runtime.
 
 ### Python Flask
 ```bash

@@ -2,5 +2,5 @@
 
 source .venv/bin/activate
 
-gunicorn -w 8 main:app -b :3000 &
+gunicorn -w 16 -k gevent main:app -b :3000 &
 echo $! > server.pid

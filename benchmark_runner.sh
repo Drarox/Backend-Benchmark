@@ -48,3 +48,4 @@ echo "🔧 Parsing results & create html file..."
 python3 parse_html.py
 
 echo "✅ All frameworks benchmark complete."
+open results_dashboard.html

@@ -36,7 +36,7 @@ Each framework can be run with its corresponding language runtime.
 
 ### Python Flask
 ```bash
-gunicorn -w 8 main:app -b :3000
+gunicorn -w 16 -k gevent main:app -b :3000
 ```
 
 ### Python FastAPI

@@ -1,7 +1,12 @@
+import sys
 import os
 import re
 import csv
 import json
+import platform
+import psutil
+import subprocess
+from datetime import datetime, timezone
 
 # Parses wrk output files into a CSV
 
@@ -34,6 +39,55 @@ def normalize_transfer(val, unit):
     if unit == "GB":
         return val * 1024 * 1024
     return val
+
+def get_os_name():
+    try:
+        import distro
+    except ImportError:
+        distro = None  # We'll handle missing distro gracefully
+
+    if platform.system() == "Darwin":
+        mac_ver = platform.mac_ver()[0]  # e.g., '13.4.1'
+        os_info = f"macOS {mac_ver}"
+    elif platform.system() == "Linux":
+        if distro:
+            name = distro.name(pretty=True)  # 'Ubuntu 24.04 LTS'
+            if not name:
+                # fallback if pretty name missing
+                name = f"{distro.id()} {distro.version()}"
+            os_info = name
+        else:
+            # If distro not installed, fallback to platform info
+            os_info = f"Linux {platform.release()}"
+    else:
+        os_info = f"{platform.system()} {platform.release()}"
+    
+    return os_info
+
+def get_cpu_name():
+    system = platform.system()
+    cpu_name = "Unknown CPU"
+
+    if system == "Darwin":
+        try:
+            cpu_name = subprocess.check_output(
+                ["sysctl", "-n", "machdep.cpu.brand_string"],
+                text=True
+            ).strip()
+        except Exception:
+            pass
+
+    elif system == "Linux":
+        try:
+            with open("/proc/cpuinfo") as f:
+                for line in f:
+                    if "model name" in line:
+                        cpu_name = line.split(":", 1)[1].strip()
+                        break
+        except Exception:
+            pass
+
+    return cpu_name
 
 rows = []
 for filename in os.listdir(RESULTS_DIR):
@@ -123,6 +177,24 @@ TEMPLATE_HTML = """
     tr:nth-child(even) {
       background-color: #f9f9f9;
     }
+    #envTable {
+      margin: 3rem auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 800px;
+      font-size: 1rem;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    #envTable th, #envTable td {
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    #envTable th {
+      background-color: #f0f0f0;
+      width: 200px;
+    }
   </style>
 </head>
 <body>
@@ -149,6 +221,22 @@ TEMPLATE_HTML = """
     </tr>
   </thead>
   <tbody></tbody>
+</table>
+
+<h2>🛠 Benchmark Environment</h2>
+<table id="envTable">
+  <tbody>
+    <tr><th>OS</th><td id="os">__OS__</td></tr>
+    <tr><th>CPU</th><td id="cpu">__CPU__</td></tr>
+    <tr><th>RAM</th><td id="ram">__RAM__</td></tr>
+    <tr><th>Date</th><td id="date">__DATE__</td></tr>
+    <tr><th>Benchmark Command</th><td><code>wrk -t8 -c1000 -d60s -s post.lua</code></td></tr>
+    <tr><th>Python Version</th><td id="date">__PYVER__</td></tr>
+    <tr><th>Node Version</th><td id="date">__NODEVER__</td></tr>
+    <tr><th>Bun Version</th><td id="date">__BUNVER__</td></tr>
+    <tr><th>Deno Version</th><td id="date">__DENOVER__</td></tr>
+    <tr><th>Go Version</th><td id="date">__GOVER__</td></tr>
+  </tbody>
 </table>
 
 <script>
@@ -212,6 +300,61 @@ TEMPLATE_HTML = """
 
 # Inject JSON directly
 html_with_data = TEMPLATE_HTML.replace("__DATA__", json.dumps(rows, indent=2))
+
+# Inject environment
+date_info = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+# Sytem infos
+os_info = get_os_name()
+
+cpu_name = get_cpu_name()
+cpu_cores = psutil.cpu_count(logical=False) or psutil.cpu_count(logical=True) or "Unknown"
+cpu_info = f"{cpu_name} ({cpu_cores} cores)"
+
+ram_info = f"{round(psutil.virtual_memory().total / (1024**3))} GB"
+
+# Python version
+pyver = sys.version.split()[0]  # e.g. '3.11.4'
+
+# Node.js version
+try:
+    nodever = subprocess.check_output(["node", "--version"], text=True).strip()
+except Exception:
+    nodever = "Node not found"
+
+# Bun version
+try:
+    bunver = subprocess.check_output(["bun", "--version"], text=True).strip()
+except Exception:
+    bunver = "Bun not found"
+
+# Deno version
+try:
+    deno_full = subprocess.check_output(["deno", "--version"], text=True).strip().split("\n")[0]
+    # deno_full example: "deno 1.35.2 (release, x86_64-unknown-linux-gnu)"
+    denover = " ".join(deno_full.split()[:2])  # keeps "deno 1.35.2"
+except Exception:
+    denover = "Deno not found"
+
+# Go version
+try:
+    gover = subprocess.check_output(["go", "version"], text=True).strip()
+    # go version output example: 'go version go1.21.0 linux/amd64'
+    # Extract just 'go1.21.0'
+    gover = gover.split()[2]
+except Exception:
+    gover = "Go not found"
+
+html_with_data = html_with_data \
+    .replace("__OS__", os_info) \
+    .replace("__CPU__", cpu_info) \
+    .replace("__RAM__", ram_info) \
+    .replace("__DATE__", date_info) \
+    .replace("__PYVER__", pyver) \
+    .replace("__NODEVER__", nodever) \
+    .replace("__BUNVER__", bunver) \
+    .replace("__DENOVER__", denover) \
+    .replace("__GOVER__", gover)
 
 # Write to standalone HTML
 with open("results_dashboard.html", "w") as f:

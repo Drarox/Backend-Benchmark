@@ -1,3 +1,3 @@
 #!/bin/bash
-bun index.js &
+bun index.ts &
 echo $! > server.pid

@@ -1,3 +1,3 @@
 #!/bin/bash
-deno run --allow-net mod.ts &
+deno run --allow-net --allow-env mod.ts &
 echo $! > server.pid

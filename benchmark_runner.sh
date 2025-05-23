@@ -16,6 +16,8 @@ FRAMEWORKS=(
   "bun-express"
   "bun-fastify"
   "deno"
+  "deno-express"
+  "deno-fastify"
   "go-gin"
   "go-echo"
   "go-fiber"

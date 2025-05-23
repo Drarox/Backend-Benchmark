@@ -1,4 +1,5 @@
-const fastify = require("fastify")();
+import Fastify from "fastify";
+const fastify = Fastify();
 
 fastify.post("/process", async (request, reply) => {
   const numbers = request.body.numbers || [];

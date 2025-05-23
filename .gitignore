@@ -62,5 +62,5 @@ docs/_build/
 results/
 server.pid
 server
-benchmark_dashboard.html
+results_dashboard.html
 results_summary.csv

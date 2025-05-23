@@ -6,7 +6,7 @@ import json
 # Parses wrk output files into a CSV
 
 RESULTS_DIR = "results"
-OUTPUT_CSV = "results_summary.csv"
+OUTPUT_CSV = RESULTS_DIR + "/" + "results_summary.csv"
 
 # Regex to extract key metrics from wrk output
 regex = {
@@ -102,6 +102,27 @@ TEMPLATE_HTML = """
       margin-top: 3rem;
       color: #444;
     }
+    table {
+      margin: 3rem auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1000px;
+      font-size: 1rem;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
   </style>
 </head>
 <body>
@@ -116,6 +137,19 @@ TEMPLATE_HTML = """
 
 <h2>📤 Transfer per Second (kB)</h2>
 <canvas id="transferChart"></canvas>
+
+<h2>📊 Full Results Table (Sorted by Requests/sec)</h2>
+<table id="resultsTable">
+  <thead>
+    <tr>
+      <th>Framework</th>
+      <th>Requests/sec</th>
+      <th>Avg Latency (ms)</th>
+      <th>Transfer/sec (kB)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
 <script>
   const resultsData = __DATA__;
@@ -147,16 +181,30 @@ TEMPLATE_HTML = """
     });
   }
 
-  const data = resultsData.map(d => ({
-    framework: d.framework,
-    requests_per_sec: +d.requests_per_sec,
-    avg_latency_ms: +d.avg_latency_ms,
-    transfer_kb_sec: +d.transfer_kb_sec,
-  }));
+  // Sort individually for each chart
+  const rpsSorted = [...resultsData].sort((a, b) => a.requests_per_sec - b.requests_per_sec);
+  const latencySorted = [...resultsData].sort((a, b) => b.avg_latency_ms - a.avg_latency_ms);
+  const transferSorted = [...resultsData].sort((a, b) => a.transfer_kb_sec - b.transfer_kb_sec);
 
-  createChart('requestsChart', 'Requests/sec', data.map(d => ({ framework: d.framework, value: d.requests_per_sec })), '#0d6efd');
-  createChart('latencyChart', 'Average Latency (ms)', data.map(d => ({ framework: d.framework, value: d.avg_latency_ms })), '#dc3545');
-  createChart('transferChart', 'Transfer/sec (kB)', data.map(d => ({ framework: d.framework, value: d.transfer_kb_sec })), '#198754');
+  createChart('requestsChart', 'Requests/sec', rpsSorted.map(d => ({ framework: d.framework, value: d.requests_per_sec })), '#0d6efd');
+  createChart('latencyChart', 'Average Latency (ms)', latencySorted.map(d => ({ framework: d.framework, value: d.avg_latency_ms })), '#dc3545');
+  createChart('transferChart', 'Transfer/sec (kB)', transferSorted.map(d => ({ framework: d.framework, value: d.transfer_kb_sec })), '#198754');
+
+  // Tabel view
+  const sortedData = [...resultsData].sort((a, b) => b.requests_per_sec - a.requests_per_sec);
+  const tableBody = document.querySelector("#resultsTable tbody");
+
+  sortedData.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${row.framework}</td>
+      <td>${row.requests_per_sec.toFixed(2)}</td>
+      <td>${row.avg_latency_ms.toFixed(2)}</td>
+      <td>${row.transfer_kb_sec.toFixed(2)}</td>
+    `;
+    tableBody.appendChild(tr);
+  });
+
 </script>
 </body>
 </html>
@@ -166,7 +214,7 @@ TEMPLATE_HTML = """
 html_with_data = TEMPLATE_HTML.replace("__DATA__", json.dumps(rows, indent=2))
 
 # Write to standalone HTML
-with open("benchmark_dashboard.html", "w") as f:
+with open("results_dashboard.html", "w") as f:
     f.write(html_with_data)
 
-print("✅ Self-contained HTML dashboard written to benchmark_dashboard.html")
+print("✅ Self-contained HTML dashboard written to results_dashboard.html")

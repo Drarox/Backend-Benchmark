@@ -1,4 +1,4 @@
 #!/bin/bash
 npm run build
-npm run start:prod &
+node dist/main &
 echo $! > server.pid

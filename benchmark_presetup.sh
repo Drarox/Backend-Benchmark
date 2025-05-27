@@ -23,8 +23,16 @@ done
 
 # Install Python packages psutil and distro globally (assumes pip is available)
 echo "Installing required Python packages: psutil, distro"
-python3 -m pip install --upgrade pip
-python3 -m pip install psutil distro
+if [ -f /etc/debian_version ]; then
+  echo "🟢 Detected Debian/Ubuntu - installing via apt"
+  apt update && apt install -y python3-psutil python3-distro
+else
+  echo "🟡 Non-Debian system - installing via pip using venv"
+  python3 -m venv .venv
+  . .venv/bin/activate
+  pip install --upgrade pip
+  pip install psutil distro
+fi
 
 # Find and run install.sh scripts inside subfolders of the script directory
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

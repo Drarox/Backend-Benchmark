@@ -58,6 +58,7 @@ dist/
 htmlcov/
 .tox/
 docs/_build/
+.venv/
 
 results/
 server.pid

@@ -195,6 +195,12 @@ TEMPLATE_HTML = """
       background-color: #f0f0f0;
       width: 200px;
     }
+    footer {
+      text-align: center; 
+      margin-top: 80px; 
+      font-size: 0.9em; 
+      color: #888;
+    }
   </style>
 </head>
 <body>
@@ -238,6 +244,12 @@ TEMPLATE_HTML = """
     <tr><th>Go Version</th><td id="date">__GOVER__</td></tr>
   </tbody>
 </table>
+
+<footer>
+  Results generated using <a href="https://github.com/Drarox/Backend-Benchmark" target="_blank" style="color: #555; text-decoration: none;">
+    Drarox/Backend-Benchmark
+  </a>
+</footer>
 
 <script>
   const resultsData = __DATA__;

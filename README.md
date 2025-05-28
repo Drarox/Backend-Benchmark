@@ -27,7 +27,7 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
 Each framework is tested using:
 
 ```bash
-wrk -t8 -c1000 -d60s -s post.lua http://localhost:3000/process
+wrk -t"$CORES" -c1000 -d60s -s post.lua http://localhost:3000/process
 ```
 
 ## 📁 Project Structure
@@ -85,18 +85,16 @@ cd backend-benchmark
 This will:
 
 * Sequentially start each framework server
-* Run a high-load test using:
-
-  ```bash
-  wrk -t8 -c1000 -d60s -s post.lua http://localhost:3000/process
-  ```
+* Run a high-load test using [`wrk`](https://github.com/wg/wrk)
 * Kill the server
 * Save results in `results/`
 * Generate `results_dashboard.html`
 
 ## 🐳 Run with Docker (No Host Dependencies)
 
-Don't want to install Python, Node, Go, Deno, Bun, or `wrk` on your machine? No problem — everything runs cleanly inside a container.
+Don't want to install Python, Node, Go, Deno, Bun, or wrk on your machine?
+No problem: everything runs cleanly inside a container.
+The Docker image installs all the prerequisites !
 
 ### ✅ One-Time: Build the Docker image
 
@@ -114,17 +112,6 @@ docker run --rm -v "$PWD/results:/app/results" backend-benchmark
 * Generates the HTML dashboard
 * Mounts results to your host in the `results/` folder
 
-### 📦 What’s Inside the Image
-
-The Docker image installs:
-
-* Python
-* Node.js (LTS)
-* Go
-* Deno
-* Bun
-* wrk
-* All dependencies needed by each framework
 
 This lets you run the full suite **with zero host setup** and clean everything up with one `docker rmi`.
 

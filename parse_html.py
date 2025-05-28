@@ -237,7 +237,7 @@ TEMPLATE_HTML = """
     <tr><th>CPU</th><td id="cpu">__CPU__</td></tr>
     <tr><th>RAM</th><td id="ram">__RAM__</td></tr>
     <tr><th>Date</th><td id="date">__DATE__</td></tr>
-    <tr><th>Benchmark Command</th><td><code>wrk -t8 -c1000 -d60s -s post.lua</code></td></tr>
+    <tr><th>Benchmark Command</th><td><code>wrk -t__CORES__ -c1000 -d60s -s post.lua</code></td></tr>
     <tr><th>Python Version</th><td id="date">__PYVER__</td></tr>
     <tr><th>Node Version</th><td id="date">__NODEVER__</td></tr>
     <tr><th>Bun Version</th><td id="date">__BUNVER__</td></tr>
@@ -361,6 +361,7 @@ except Exception:
 html_with_data = html_with_data \
     .replace("__OS__", os_info) \
     .replace("__CPU__", cpu_info) \
+    .replace("__CORES__", str(cpu_cores)) \
     .replace("__RAM__", ram_info) \
     .replace("__DATE__", date_info) \
     .replace("__PYVER__", pyver) \

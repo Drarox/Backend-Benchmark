@@ -10,8 +10,9 @@ from datetime import datetime, timezone
 
 # Parses wrk output files into a CSV
 
-RESULTS_DIR = "results"
-OUTPUT_CSV = RESULTS_DIR + "/" + "results_summary.csv"
+RESULTS_DIR = "results/raw"
+OUTPUT_CSV = "results/results_summary.csv"
+OUTPUT_HTML = "results/results_dashboard.html"
 
 # Regex to extract key metrics from wrk output
 regex = {
@@ -369,7 +370,7 @@ html_with_data = html_with_data \
     .replace("__GOVER__", gover)
 
 # Write to standalone HTML
-with open("results_dashboard.html", "w") as f:
+with open(OUTPUT_HTML, "w") as f:
     f.write(html_with_data)
 
-print("✅ Self-contained HTML dashboard written to results_dashboard.html")
+print(f"✅ Self-contained HTML dashboard written to {OUTPUT_HTML}")

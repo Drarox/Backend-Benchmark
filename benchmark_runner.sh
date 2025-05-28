@@ -1,7 +1,7 @@
 #!/bin/bash
 # Sequentially benchmarks all frameworks by running each server's start.sh
 
-mkdir -p results
+mkdir -p results/raw
 
 # Ordered list of framework folders
 FRAMEWORKS=(
@@ -15,6 +15,8 @@ FRAMEWORKS=(
   "bun"
   "bun-express"
   "bun-fastify"
+  "bun-hono"
+  "bun-elysia"
   "deno"
   "deno-express"
   "deno-fastify"
@@ -33,7 +35,7 @@ for name in "${FRAMEWORKS[@]}"; do
   until curl -s -H 'Content-Type: application/json' -d '{"numbers":[1,2,3,4,5]}' -X POST http://localhost:3000/process > /dev/null; do sleep 0.5; done
 
   echo "🚀 Running wrk on $name..."
-  wrk -t8 -c1000 -d60s -s ../post.lua http://localhost:3000/process > ../results/$name.txt
+  wrk -t8 -c1000 -d60s -s ../post.lua http://localhost:3000/process > ../results/raw/$name.txt
 
   SERVER_PID=$(cat server.pid)
   echo "🛑 Killing $name (PID $SERVER_PID)"
@@ -54,5 +56,5 @@ python3 parse_html.py
 echo "✅ All frameworks benchmark complete."
 
 if [ -x "$(command -v open)" ]; then
-  open results_dashboard.html
+  open results/results_dashboard.html
 fi

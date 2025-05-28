@@ -1,14 +1,20 @@
 # Backend Benchmark
 
-This project automates benchmarks of different backend frameworks for handling a simple JSON-processing POST route and creates a detailed HTML report with charts summarizing the results.
+A fully automated benchmarking suite comparing popular backend frameworks (Python, Go, Node, Deno, Bun). It measures performance on a consistent JSON-processing route and outputs a standalone HTML dashboard with visual results.
+
+## ⚡ What It Does
+
+* Benchmarks dozens of frameworks across languages
+* Measures Requests/sec, Latency, Transfer/sec
+* Generates a zero-dependency HTML dashboard with charts + system info (`results_dashboard.html`)
 
 ## 📦 Frameworks Covered
 
 - **Python**: Flask, FastAPI  
 - **JavaScript Runtimes**:
-  - **Node-based**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify)  
-  - **Bun**  
-  - **Deno** (using `Deno.serve`, native HTTP server)
+  - **Node**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify)  
+  - **Bun**: Bun (native), Express, Fastify, Hono, Elysia
+  - **Deno**: Deno (native), Express, Fastify
 - **Go**: Gin, Echo, Fiber, Native `net/http`
 
 ## 🔬 Benchmark Scenario
@@ -17,6 +23,29 @@ This project automates benchmarks of different backend frameworks for handling a
 - Input JSON: `{ "numbers": [1, 2, 3, 4, 5] }`
 - Task: Compute the sum of squares of the numbers
 - Output JSON: `{ "result": 55 }`
+
+Each framework is tested using:
+
+```bash
+wrk -t8 -c1000 -d60s -s post.lua http://localhost:3000/process
+```
+
+## 📁 Project Structure
+
+```
+backend-benchmark/
+├── <framework>/         # One folder per framework
+│   └── install.sh       # Install dependencies of the framework (optional)
+│   └── start.sh         # Starts that framework's server
+├── results/             # Results ouput folder
+│   └── raw/             # Raw wrk output per framework
+│   └── results_summary.csv  # Parsed performance data
+│   └── results_dashboard.html  # Interactive HTML report
+├── post.lua             # wrk load script
+├── benchmark_presetup.sh  # Install all dependencies
+├── benchmark_runner.sh  # Run benchmarks
+└── parse_html.py        # Parses wrk results into charts
+```
 
 ## 🔧 Prerequisites
 
@@ -63,36 +92,41 @@ This will:
   ```
 * Kill the server
 * Save results in `results/`
-* Generate `benchmark_dashboard.html`
+* Generate `results_dashboard.html`
 
-## 📁 Project Structure
+## 🐳 Run with Docker (No Host Dependencies)
 
-```
-backend-benchmark/
-├── <framework>/         # One folder per framework
-│   └── install.sh       # Install dependencies of the framework (optional)
-│   └── start.sh         # Starts that framework's server
-├── results/             # Raw wrk output per framework
-│   └── results_summary.csv  # Parsed performance data
-├── benchmark_dashboard.html  # Interactive HTML report
-├── post.lua             # wrk load script
-├── benchmark_presetup.sh  # Install all dependencies
-├── benchmark_runner.sh  # Run benchmarks
-└── parse_html.py        # Parses wrk results into charts
+Don't want to install Python, Node, Go, Deno, Bun, or `wrk` on your machine? No problem — everything runs cleanly inside a container.
+
+### ✅ One-Time: Build the Docker image
+
+```bash
+docker build -t backend-benchmark .
 ```
 
-## 📈 What You Get
+### 🚀 Run the full benchmark suite
 
-After running the benchmark, you'll get:
+```bash
+docker run --rm -v "$PWD/results:/app/results" backend-benchmark
+```
 
-* A fully standalone **interactive HTML dashboard** (`benchmark_dashboard.html`)
-* Auto-sorted **charts** using [Chart.js](https://www.chartjs.org/):
-  * Requests per second
-  * Average latency (ms)
-  * Transfer rate (kB/sec)
-* A **summary table** of all raw numbers
-* A **system/environment report** (OS, CPU, RAM, date, benchmark command, runtime versions)
-* No external dependencies — open the file offline in any browser
+* Benchmarks all frameworks
+* Generates the HTML dashboard
+* Mounts results to your host in the `results/` folder
+
+### 📦 What’s Inside the Image
+
+The Docker image installs:
+
+* Python
+* Node.js (LTS)
+* Go
+* Deno
+* Bun
+* wrk
+* All dependencies needed by each framework
+
+This lets you run the full suite **with zero host setup** and clean everything up with one `docker rmi`.
 
 ## 🧾 Benchmark Results
 

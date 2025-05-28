@@ -13,8 +13,8 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
 - **Python**: Flask, FastAPI  
 - **JavaScript Runtimes**:
   - **Node**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify)  
-  - **Bun**: Bun (native), Express, Fastify, Hono, Elysia
-  - **Deno**: Deno (native), Express, Fastify
+  - **Bun**: Bun (native), Express, Hono, Elysia
+  - **Deno**: Deno (native), Express, Hono
 - **Go**: Gin, Echo, Fiber, Native `net/http`
 
 ## 🔬 Benchmark Scenario

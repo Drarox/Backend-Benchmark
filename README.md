@@ -119,8 +119,13 @@ This lets you run the full suite **with zero host setup** and clean everything u
 
 * **macOS** – M1 Pro (8-core), 16 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_20250528.html)
 
-* **Ubuntu (Docker)** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu_docker_20250528.html)
+* **macOS (Docker Desktop)** – M1 Pro (8-core), 8 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_docker_20250528.html)
 
+* **Ubuntu (Docker)** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_docker_20250528.html)
+
+* **Ubuntu** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (May 30, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_20250530.html)
+
+* **Ubuntu (Docker)** – AMD Ryzen 7 1700X (8-core), 24 GB RAM — [View dashboard (May 30, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu2_docker_20250530.html)
 
 ## 🤝 Contributing
 

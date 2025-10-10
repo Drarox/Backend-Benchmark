@@ -65,3 +65,6 @@ server.pid
 server
 results_dashboard.html
 results_summary.csv
+
+*.lock
+package-lock.json

@@ -9,6 +9,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "fastify": "^5.3.3"
+    "fastify": "latest"
   }
 }

@@ -10,12 +10,13 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
 
 ## 📦 Frameworks Covered
 
-- **Python**: Flask, FastAPI  
+- **Python**: Flask (with Gunicorn), FastAPI (with Uvicorn)
 - **JavaScript Runtimes**:
   - **Node**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify)  
   - **Bun**: Bun (native), Express, Hono, Elysia
   - **Deno**: Deno (native), Express, Hono
 - **Go**: Gin, Echo, Fiber, Native `net/http`
+- **PHP**: Lavarel (with FrankenPHP)
 
 ## 🔬 Benchmark Scenario
 
@@ -52,10 +53,11 @@ backend-benchmark/
 Install the following tools:
 
 * [Python 3.11+](https://www.python.org/)
-* [Node.js (LTS)](https://nodejs.org/)
+* [Node.js](https://nodejs.org/)
 * [Go](https://golang.org/)
 * [Deno](https://deno.land/)
 * [Bun](https://bun.sh/)
+* [PHP](https://www.php.net/) + [Composer](https://getcomposer.org/)
 * [`wrk`](https://github.com/wg/wrk)
 
 Ensure each tool is available in your `PATH`.

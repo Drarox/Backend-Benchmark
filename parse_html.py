@@ -243,6 +243,7 @@ TEMPLATE_HTML = """
     <tr><th>Bun Version</th><td id="date">__BUNVER__</td></tr>
     <tr><th>Deno Version</th><td id="date">__DENOVER__</td></tr>
     <tr><th>Go Version</th><td id="date">__GOVER__</td></tr>
+    <tr><th>PHP Version</th><td id="date">__PHPVER__</td></tr>
   </tbody>
 </table>
 
@@ -358,6 +359,13 @@ try:
 except Exception:
     gover = "Go not found"
 
+# PHP version
+try:
+    phpver = subprocess.check_output(["php", "--version"], text=True).strip()
+    phpver = phpver.split()[1]
+except Exception:
+    phpver = "PHP not found"
+
 html_with_data = html_with_data \
     .replace("__OS__", os_info) \
     .replace("__CPU__", cpu_info) \
@@ -368,6 +376,7 @@ html_with_data = html_with_data \
     .replace("__NODEVER__", nodever) \
     .replace("__BUNVER__", bunver) \
     .replace("__DENOVER__", denover) \
+    .replace("__PHPVER__", phpver) \
     .replace("__GOVER__", gover)
 
 # Write to standalone HTML

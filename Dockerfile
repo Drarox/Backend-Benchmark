@@ -26,9 +26,12 @@ RUN curl -fsSL https://deno.land/install.sh | DENO_INSTALL=/usr/local sh && \
 RUN curl -fsSL https://bun.sh/install | bash && \
     mv /root/.bun/bin/bun /usr/local/bin
 
+# Install PHP + Composer
+RUN apt-get install -y php php-xml php-mbstring php-curl && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Install wrk
-RUN apt-get update && \
-    apt-get install -y wrk
+RUN apt-get install -y wrk
 
 # Create working directory
 WORKDIR /app

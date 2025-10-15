@@ -30,6 +30,11 @@ RUN curl -fsSL https://bun.sh/install | bash && \
 RUN apt-get install -y php php-xml php-mbstring php-curl && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install java 25 via openjdk-r/ppa PPA
+RUN add-apt-repository -y ppa:openjdk-r/ppa && \
+    apt update && \
+    apt install -y openjdk-25-jdk
+    
 # Install wrk
 RUN apt-get install -y wrk
 

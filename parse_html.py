@@ -244,6 +244,7 @@ TEMPLATE_HTML = """
     <tr><th>Deno Version</th><td id="date">__DENOVER__</td></tr>
     <tr><th>Go Version</th><td id="date">__GOVER__</td></tr>
     <tr><th>PHP Version</th><td id="date">__PHPVER__</td></tr>
+    <tr><th>Java Version</th><td id="date">__JAVAVER__</td></tr>
   </tbody>
 </table>
 
@@ -366,6 +367,18 @@ try:
 except Exception:
     phpver = "PHP not found"
 
+# Java version
+try:
+    java_ver_output = subprocess.check_output(["java", "-version"], stderr=subprocess.STDOUT, text=True).strip()
+    # Updated regex to match versions like "25" or "11.0.28"
+    match = re.search(r'\"(\d+(\.\d+)*)(\"|\s)', java_ver_output)
+    if match:
+        javaver = match.group(1)
+    else:
+        javaver = "Java version not found"
+except Exception:
+    javaver = "Java not found"
+
 html_with_data = html_with_data \
     .replace("__OS__", os_info) \
     .replace("__CPU__", cpu_info) \
@@ -376,8 +389,10 @@ html_with_data = html_with_data \
     .replace("__NODEVER__", nodever) \
     .replace("__BUNVER__", bunver) \
     .replace("__DENOVER__", denover) \
+    .replace("__GOVER__", gover) \
     .replace("__PHPVER__", phpver) \
-    .replace("__GOVER__", gover)
+    .replace("__JAVAVER__", javaver)
+
 
 # Write to standalone HTML
 with open(OUTPUT_HTML, "w") as f:

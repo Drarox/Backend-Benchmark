@@ -10,7 +10,7 @@ command_exists() {
 # Check for required runtimes
 echo "Checking required runtimes..."
 
-runtimes=(python3 go node bun deno php)
+runtimes=(python3 go node bun deno php java)
 
 for runtime in "${runtimes[@]}"; do
   if command_exists "$runtime"; then

@@ -34,6 +34,11 @@ RUN apt-get install -y php php-xml php-mbstring php-curl && \
 RUN add-apt-repository -y ppa:openjdk-r/ppa && \
     apt update && \
     apt install -y openjdk-25-jdk
+
+# Install Dotnet 9.0 via dotnet/backports
+RUN add-apt-repository -y ppa:dotnet/backports && \
+    apt update && \
+    apt-get install -y dotnet-sdk-9.0
     
 # Install wrk
 RUN apt-get install -y wrk

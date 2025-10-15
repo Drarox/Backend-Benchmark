@@ -1,6 +1,6 @@
 # Backend Benchmark
 
-A fully automated benchmarking suite comparing popular backend frameworks (Python, Go, Node, Deno, Bun). It measures performance on a consistent JSON-processing route and outputs a standalone HTML dashboard with visual results.
+A fully automated benchmarking suite comparing popular backend frameworks (Python, Go, Node, etc.). It measures performance on a consistent JSON-processing route and outputs a standalone HTML dashboard with visual results.
 
 ## ⚡ What It Does
 
@@ -17,6 +17,8 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
   - **Deno**: Deno (native), Express, Hono
 - **Go**: Gin, Echo, Fiber, Native `net/http`
 - **PHP**: Lavarel (with FrankenPHP)
+- **Java**: Spring Boot
+- **C#**: ASP.NET Core
 
 ## 🔬 Benchmark Scenario
 
@@ -58,6 +60,8 @@ Install the following tools:
 * [Deno](https://deno.land/)
 * [Bun](https://bun.sh/)
 * [PHP](https://www.php.net/) + [Composer](https://getcomposer.org/)
+* [Java](https://www.java.com/)
+* [Dotnet](https://dotnet.microsoft.com/)
 * [`wrk`](https://github.com/wg/wrk)
 
 Ensure each tool is available in your `PATH`.

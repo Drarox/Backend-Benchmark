@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-./gradlew build
+dotnet build

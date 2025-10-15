@@ -245,6 +245,7 @@ TEMPLATE_HTML = """
     <tr><th>Go Version</th><td id="date">__GOVER__</td></tr>
     <tr><th>PHP Version</th><td id="date">__PHPVER__</td></tr>
     <tr><th>Java Version</th><td id="date">__JAVAVER__</td></tr>
+    <tr><th>Dotnet Version</th><td id="date">__DOTNETVER__</td></tr>
   </tbody>
 </table>
 
@@ -379,6 +380,12 @@ try:
 except Exception:
     javaver = "Java not found"
 
+# Dotnet version
+try:
+    dotnetver = subprocess.check_output(["dotnet", "--version"], stderr=subprocess.STDOUT, text=True).strip()
+except Exception:
+    dotnetver = "Dotnet not found"
+
 html_with_data = html_with_data \
     .replace("__OS__", os_info) \
     .replace("__CPU__", cpu_info) \
@@ -391,7 +398,8 @@ html_with_data = html_with_data \
     .replace("__DENOVER__", denover) \
     .replace("__GOVER__", gover) \
     .replace("__PHPVER__", phpver) \
-    .replace("__JAVAVER__", javaver)
+    .replace("__JAVAVER__", javaver) \
+    .replace("__DOTNETVER__", dotnetver)
 
 
 # Write to standalone HTML

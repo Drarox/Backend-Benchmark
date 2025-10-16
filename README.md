@@ -10,7 +10,7 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
 
 ## 📦 Frameworks Covered
 
-- **Python**: Flask (with Gunicorn), FastAPI (with Uvicorn)
+- **Python**: Flask (with Gunicorn), FastAPI (with Uvicorn), Django (with Uvicorn + Gunicorn)
 - **JavaScript Runtimes**:
   - **Node**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify)  
   - **Bun**: Bun (native), Express, Hono, Elysia

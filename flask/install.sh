@@ -1,7 +1,11 @@
 #!/bin/bash
 set -e
 
-python3 -m venv .venv
+if [ -d ".venv" ]; then
+    echo "Virtual environment .venv already exists."
+else
+    python3 -m venv .venv
+fi
 
 source .venv/bin/activate
 

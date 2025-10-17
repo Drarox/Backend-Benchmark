@@ -19,6 +19,7 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
 - **PHP**: Lavarel (with FrankenPHP)
 - **Java**: Spring Boot
 - **C#**: ASP.NET Core
+- **Ruby**: Ruby on Rails 
 
 ## 🔬 Benchmark Scenario
 
@@ -62,6 +63,7 @@ Install the following tools:
 * [PHP](https://www.php.net/) + [Composer](https://getcomposer.org/)
 * [Java](https://www.java.com/)
 * [Dotnet](https://dotnet.microsoft.com/)
+* [Ruby](https://www.ruby-lang.org/)
 * [`wrk`](https://github.com/wg/wrk)
 
 Ensure each tool is available in your `PATH`.

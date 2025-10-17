@@ -39,6 +39,9 @@ RUN add-apt-repository -y ppa:openjdk-r/ppa && \
 RUN add-apt-repository -y ppa:dotnet/backports && \
     apt update && \
     apt-get install -y dotnet-sdk-9.0
+
+# Install Ruby
+RUN apt-get install -y ruby-full libyaml-dev
     
 # Install wrk
 RUN apt-get install -y wrk

@@ -246,6 +246,7 @@ TEMPLATE_HTML = """
     <tr><th>PHP Version</th><td id="date">__PHPVER__</td></tr>
     <tr><th>Java Version</th><td id="date">__JAVAVER__</td></tr>
     <tr><th>Dotnet Version</th><td id="date">__DOTNETVER__</td></tr>
+    <tr><th>Ruby Version</th><td id="date">__RUBYVER__</td></tr>
   </tbody>
 </table>
 
@@ -386,6 +387,13 @@ try:
 except Exception:
     dotnetver = "Dotnet not found"
 
+# Ruby version
+try:
+    rubyver = subprocess.check_output(["ruby", "-v"], text=True).strip()
+    rubyver = rubyver.split()[1]
+except Exception:
+    rubyver = "Ruby not found"
+
 html_with_data = html_with_data \
     .replace("__OS__", os_info) \
     .replace("__CPU__", cpu_info) \
@@ -399,7 +407,8 @@ html_with_data = html_with_data \
     .replace("__GOVER__", gover) \
     .replace("__PHPVER__", phpver) \
     .replace("__JAVAVER__", javaver) \
-    .replace("__DOTNETVER__", dotnetver)
+    .replace("__DOTNETVER__", dotnetver) \
+    .replace("__RUBYVER__", rubyver)
 
 
 # Write to standalone HTML

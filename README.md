@@ -12,7 +12,7 @@ A fully automated benchmarking suite comparing popular backend frameworks (Pytho
 
 - **Python**: Flask (with Gunicorn), FastAPI (with Uvicorn), Django (with Uvicorn + Gunicorn)
 - **JavaScript Runtimes**:
-  - **Node**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify)  
+  - **Node**: Node (native), Express, Fastify, NestJS (Express), NestJS (Fastify), Koa
   - **Bun**: Bun (native), Express, Hono, Elysia
   - **Deno**: Deno (native), Express, Hono
 - **Go**: Gin, Echo, Fiber, Native `net/http`
@@ -125,23 +125,48 @@ This lets you run the full suite **with zero host setup** and clean everything u
 
 ## 🧾 Benchmark Results
 
-* **macOS** – M1 Pro (8-core), 16 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_20250528.html)
+Results from Octoboer 20, 2025
 
-* **macOS (Docker Desktop)** – M1 Pro (8-core), 8 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_docker_20250528.html)
+*Changelog: Lavarel, Spring Boot, ASP.NET Core, Ruby On Rails and Koa added*
 
-* **Ubuntu (Docker)** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (May 28, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_docker_20250528.html)
+* **macOS** – M1 Pro (8-core), 16 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_20251020.html)
 
-* **Ubuntu** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (May 30, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_20250530.html)
+* **macOS (Docker Desktop)** – M1 Pro (8-core), 8 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_docker_20251020.html)
 
-* **Ubuntu (Docker)** – AMD Ryzen 7 1700X (8-core), 24 GB RAM — [View dashboard (May 30, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu2_docker_20250530.html)
+### Historical Results
 
-* **macOS** – M1 Pro (8-core), 16 GB RAM — [View dashboard (October 10, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_20251010.html)
+<details>
+<summary>Results from May 28, 2025</summary>
 
-* **macOS (Docker Desktop)** – M1 Pro (8-core), 8 GB RAM — [View dashboard (October 10, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_docker_20251010.html)
+*Changelog: First run of the benchmark*
 
-* **Ubuntu (Docker)** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (October 10, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_docker_20251010.html)
+* **macOS** – M1 Pro (8-core), 16 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_20250528.html)
 
-* **Ubuntu** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard (October 10, 2025)](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_20251010.html)
+* **macOS (Docker Desktop)** – M1 Pro (8-core), 8 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_docker_20250528.html)
+
+* **Ubuntu (Docker)** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_docker_20250528.html)
+
+* **Ubuntu** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_20250530.html)
+
+* **Ubuntu (Docker)** – AMD Ryzen 7 1700X (8-core), 24 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu2_docker_20250530.html)
+
+</details>
+
+<details>
+<summary>Results from October 10, 2025</summary>
+
+*Changelog: Runtime and package updated*
+
+* **macOS** – M1 Pro (8-core), 16 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_20251010.html)
+
+* **macOS (Docker Desktop)** – M1 Pro (8-core), 8 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_macos_docker_20251010.html)
+
+* **Ubuntu (Docker)** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_docker_20251010.html)
+
+* **Ubuntu** – Xeon D-1531 (6-core), 32 GB RAM — [View dashboard](https://yannick-burkard.eu.org/backend-benchmark/results_dashboard_ubuntu1_20251010.html)
+
+</details>
+
 ## 🤝 Contributing
 
 Pull requests welcome! Add frameworks, improve charts, or enhance the automation. Feel free to fork this repository and submit a [pull request](https://github.com/Drarox/Backend-Benchmark/pulls) with your changes.

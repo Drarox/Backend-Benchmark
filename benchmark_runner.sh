@@ -6,6 +6,7 @@ mkdir -p results/raw
 
 # Ordered list of framework folders
 FRAMEWORKS=(
+  "koa"
   "rubyonrails"
   "django"
   "dotnet"
